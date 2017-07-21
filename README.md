@@ -8,14 +8,9 @@ The Forest Service is considering a proposal from a timber company to clearcut a
 
 ### Setup
 
-To create the necessary databases, launch postgres, then psql, and run the following commands:
+To create the necessary databases, launch the Postgres server, go into the root folder and run the following command:
 
-* `CREATE DATABASE wildlife_tracker;`
-* `\c wildlife_tracker;`
-* `CREATE TABLE animals (id serial PRIMARY KEY, name varchar);`
-* `CREATE TABLE endangered_animals (id serial PRIMARY KEY, name varchar, health varchar, age varchar);`
-* `CREATE TABLE sightings (id serial PRIMARY KEY, animal_id int, location varchar, ranger_name varchar);`
-* `CREATE DATABASE wildlife_tracker_test WITH TEMPLATE wildlife_tracker;`
+* `sh db_restore.sh`
 
 ## CODING FIXES
 1. EndangeredAnimal class now inherits from Animal.
