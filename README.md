@@ -19,11 +19,13 @@ To create the necessary databases, launch postgres, then psql, and run the follo
 
 ### Coding
 BUGS
-1: 2 forms on home page. We should change this to a single forms
-2: Endangered Animal sightings page does not properly show results in table form, making it difficult to read.  New to improve the page layout.
+1: endangered_animals should inherit from animals. - FIXED
+2: Endangered Animal sightings page does not properly show results in table form, making it difficult to read.  New to improve the page layout. - FIXED
 3: Data reporting is messed up.  "all sightings" report does not list endangered animals.
 4: Index.vtl has a conditional If statement attempts to not create sections of the form if the animal and endangered animals are blank. - FIXED
-5: Sighting does not track timestamp of sighting.
+5: Sighting does not track timestamp of sighting. I'll need to add "date" to the sighting class and db tables. - FIXED
+6: Sighting names location LatLong, but its just a location string, so I'll change the variable name to 'location' to more accurately describe the item.
+7: Need to improve UI layout in the animal sightings list (animal.vtl)
 
 
 
