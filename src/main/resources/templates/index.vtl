@@ -5,69 +5,90 @@
 
 <!-- report Animal sighting form -->
 #if($animals.size() > 0)
-<h3> Report Animal Sighting </h3>
-<form action="/sighting" method="post">
-    <label>Select Animal</label>
-    <select name="animalSelected">
-      #foreach($animal in $animals)
-        <option value="$animal.getId()">$animal.getName()</option>
-      #end
-    </select>
-    <label>Location</label>
-    <input type="text" name="latLong">
-    <label>Your Name</label>
-    <input type="text" name="rangerName">
-    <button type="submit">Submit Report</button>
+<div class="animal">
+  <h3> Non-Endangered Animals</h3>
+  <h4> Report Sighting Form </h4>
+  <form action="/sighting" method="post">
+      <label>Select Animal</label>
+      <select name="animalSelected">
+        #foreach($animal in $animals)
+          <option value="$animal.getId()">$animal.getName()</option>
+        #end
+      </select>
+      <label>Location</label>
+      <input type="text" name="latLong">
+      <label>Your Name</label>
+      <input type="text" name="rangerName">
+      <button type="submit">Submit Report</button>
 
-</form>
-<hr>
+  </form>
+  <hr>
+  <h4>Data</h4>
+  #if ($animals.size() == 0)
+    <a href="/animal/new">Add Animal to Database to Report a Sighting</a>
+    #else
+    <div class="ReportsTable">
+      <div class="divTableBody">
+        <div class="divTableRow">
+          <div class="divTableCell">Name</div>
+          <div class="divTableCell"># of Sightings</div>
+          <div class="divTableCell">Details</div>
+        </div>
+        #foreach ($animal in $animals)
+        <div class="divTableRow">
+          <div class="divTableCell">$animal.getName()</div>
+          <div class="divTableCell">$animal.getSightings().size()</div>
+          <div class="divTableCell"><a href="/animal/$animal.getId()">details</a></div>
+        </div>
+        #end
+      </div>
+    </div>
+  #end
+</div>  <!-- end of animal div -->
 #end
 
 
 <!-- Report endangered animal form -->
 #if($endangeredAnimals.size() > 0)
-<h3> Report Endangered Animal Sighting </h3>
-<form action="/endangered_sighting" method="post">
-    <label>Select Endangered Animal</label>
-    <select name="endangeredAnimalSelected">
-      #foreach($endangered_animal in $endangeredAnimals)
-        <option value="$endangered_animal.getId()">$endangered_animal.getName()</option>
-      #end
-    </select>
+<div class="endangered_animal">
+  <h3> Endangered Animals</h3>
+  <h4> Report Sighting Form </h4>
+  <form action="/endangered_sighting" method="post">
+      <label>Select Endangered Animal</label>
+      <select name="endangeredAnimalSelected">
+        #foreach($endangered_animal in $endangeredAnimals)
+          <option value="$endangered_animal.getId()">$endangered_animal.getName()</option>
+        #end
+      </select>
 
-    <label>Location</label>
-    <input type="text" name="latLong">
-    <label>Your Name</label>
-    <input type="text" name="rangerName">
-    <button type="submit">Submit Report</button>
-</form>
-<hr>
-#end
-
-
-<h3>Endangered Animal Sightings</h3>
-
-#if ($endangeredAnimals.size() == 0)
-  <a href="/animal/new">Add Animal to Database to Report a Sighting</a>
-#else
-  #foreach ($endangeredAnimal in $endangeredAnimals)
-    <a href="/endangered_animal/$endangeredAnimal.getId()" class="thumbnail">
-      <h4>$endangeredAnimal.getName()</h4>
-      <h4>$endangeredAnimal.getSightings().size() Reported Sighting(s)</h4>
-      <p>Click for details</p>
-    </a>
+      <label>Location</label>
+      <input type="text" name="latLong">
+      <label>Your Name</label>
+      <input type="text" name="rangerName">
+      <button type="submit">Submit Report</button>
+  </form>
+  <hr>
   #end
-#end
+  <h4>Data</h4>
 
-<h3>All Animals & Sightings</h3>
-#if ($animals.size() == 0)
-  <a href="/animal/new">Add Animal to Database to Report a Sighting</a>
-#else
-  #foreach ($animal in $animals)
-    <a href="/animal/$animal.getId()" class="thumbnail">
-      <h4>$animal.getName()</h4>
-      <h4>$animal.getSightings().size() Reported Sighting(s)</h4>
-      <p>Click for details</p>
-    </a>
+  #if ($endangeredAnimals.size() == 0)
+    <a href="/animal/new">Add Animal to Database to Report a Sighting</a>
+  #else
+  <div class="ReportsTable">
+    <div class="divTableBody">
+      <div class="divTableRow">
+        <div class="divTableCell">Name</div>
+        <div class="divTableCell"># of Sightings</div>
+        <div class="divTableCell">Details</div>
+      </div>
+      #foreach ($endangeredAnimal in $endangeredAnimals)
+      <div class="divTableRow">
+        <div class="divTableCell">$endangeredAnimal.getName()</div>
+        <div class="divTableCell">$endangeredAnimal.getSightings().size()</div>
+        <div class="divTableCell"><a href="/endangered_animal/$endangeredAnimal.getId()">details</a></div>
+      </div>
+    #end
+    </div>
+  </div>
+</div>  <!-- end of endangered_animal div -->
   #end
-#end

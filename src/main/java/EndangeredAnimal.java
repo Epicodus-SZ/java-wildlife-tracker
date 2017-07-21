@@ -44,6 +44,7 @@ public class EndangeredAnimal extends Animal {
     super(name);
     this.health = EndangeredAnimal.Health.valueOf(health.toUpperCase());
     this.age = EndangeredAnimal.Age.valueOf(age.toUpperCase());;
+    endangered = true;
   }
 
   public String getHealth() {
@@ -77,11 +78,12 @@ public class EndangeredAnimal extends Animal {
   @Override
   public void save() {
     try(Connection con = DB.sql2o.open()) {
-      String sql = "INSERT INTO endangered_animals (name, health, age) VALUES (:name, :health, :age);";
+      String sql = "INSERT INTO animals (name, health, age, endangered) VALUES (:name, :health, :age, :endangered)";
       this.id = (int) con.createQuery(sql, true)
         .addParameter("name", this.name)
         .addParameter("health", this.health.toString())
         .addParameter("age", this.age)
+        .addParameter("endangered", this.endangered)
         .executeUpdate()
         .getKey();
     }
@@ -89,7 +91,7 @@ public class EndangeredAnimal extends Animal {
 
   public static List<EndangeredAnimal> allEndangered() {
     try(Connection con = DB.sql2o.open()) {
-      String sql = "SELECT * FROM endangered_animals;";
+      String sql = "SELECT * FROM animals WHERE endangered=true";
       return con.createQuery(sql)
         .executeAndFetch(EndangeredAnimal.class);
     }
@@ -97,7 +99,7 @@ public class EndangeredAnimal extends Animal {
 
   public static EndangeredAnimal find(int id) {
     try(Connection con = DB.sql2o.open()) {
-      String sql = "SELECT * FROM endangered_animals WHERE id=:id;";
+      String sql = "SELECT * FROM animals WHERE id=:id";
       EndangeredAnimal endangeredanimal = con.createQuery(sql)
         .addParameter("id", id)
         .executeAndFetchFirst(EndangeredAnimal.class);
@@ -110,7 +112,7 @@ public class EndangeredAnimal extends Animal {
       throw new IllegalArgumentException("That is not a valid health");
     }
     try(Connection con = DB.sql2o.open()) {
-      String sql = "UPDATE endangered_animals SET health=:health WHERE id=:id;";
+      String sql = "UPDATE animals SET health=:health WHERE id=:id;";
       con.createQuery(sql)
         .addParameter("id", id)
         .addParameter("health", health.toUpperCase())
@@ -123,7 +125,7 @@ public class EndangeredAnimal extends Animal {
       throw new IllegalArgumentException("That is not a valid Age");
     }
     try(Connection con = DB.sql2o.open()) {
-      String sql = "UPDATE endangered_animals SET age=:age WHERE id=:id;";
+      String sql = "UPDATE animals SET age=:age WHERE id=:id;";
       con.createQuery(sql)
         .addParameter("age", age)
         .addParameter("id", id)

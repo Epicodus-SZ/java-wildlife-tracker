@@ -1,9 +1,10 @@
 <h4><a href="/">Home</a></h4>
 
 <h1>$endangeredAnimal.getName()</h1>
-<h3>ID: $endangeredAnimal.getId()</h3>
-
-
+<h4>ID: $endangeredAnimal.getId()</h4>
+<hr>
+admin options: <a href="/animal/$endangeredAnimal.getId()/delete">delete animal</a>
+<hr>
 
 #if($endangeredAnimal.getSightings().size() == 0)
   <p>To report a sighting, please visit the <a href="/">home page</a>.</p>

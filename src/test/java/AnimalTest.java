@@ -32,7 +32,7 @@ public class AnimalTest {
   public void save_assignsIdToObjectAndSavesObjectToDatabase() {
     Animal testAnimal = new Animal("Deer");
     testAnimal.save();
-    Animal savedAnimal = Animal.all().get(0);
+    Animal savedAnimal = Animal.allNonEndangered().get(0);
     assertEquals(testAnimal.getId(), savedAnimal.getId());
   }
 
@@ -42,8 +42,8 @@ public class AnimalTest {
     firstAnimal.save();
     Animal secondAnimal = new Animal("Black Bear");
     secondAnimal.save();
-    assertEquals(true, Animal.all().get(0).equals(firstAnimal));
-    assertEquals(true, Animal.all().get(1).equals(secondAnimal));
+    assertEquals(true, Animal.allNonEndangered().get(0).equals(firstAnimal));
+    assertEquals(true, Animal.allNonEndangered().get(1).equals(secondAnimal));
   }
 
   @Test

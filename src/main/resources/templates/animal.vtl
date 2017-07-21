@@ -1,7 +1,10 @@
 <h4><a href="/">Home</a></h4>
 
 <h1>$animal.getName()</h1>
-<h3>ID: $animal.getId()</h3>
+<h4>ID: $animal.getId()</h4>
+<hr>
+admin options: <a href="/animal/$animal.getId()/delete">delete animal</a>
+<hr>
 #if($animal.getSightings().size() == 0)
   <p>To report a sighting, please visit the <a href="/">home page</a>.</p>
 #else
@@ -10,8 +13,6 @@
     <div class="divTableRow">
       <div class="divTableCell">Location</div>
       <div class="divTableCell">Date</div>
-      <div class="divTableCell">Health</div>
-      <div class="divTableCell">Age</div>
       <div class="divTableCell">Ranger</div>
       <div class="divTableCell">Sighting Id</div>
     </div>

@@ -1,4 +1,19 @@
-/* Table CSS */
+.animal{
+	background-color: salmon;
+	padding: 15px;
+}
+
+.endangered_animal{
+	background-color: #ddd;
+	padding: 15px;
+}
+
+.ReportsTable{
+	display: table;
+	background-color: #fff;
+}
+
+/* Default Table CSS */
 
 .divTable{
 	display: table;

@@ -17,9 +17,6 @@ To create the necessary databases, launch postgres, then psql, and run the follo
 * `CREATE TABLE sightings (id serial PRIMARY KEY, animal_id int, location varchar, ranger_name varchar);`
 * `CREATE DATABASE wildlife_tracker_test WITH TEMPLATE wildlife_tracker;`
 
-## CODING TO DO
-6: Sighting names location LatLong, but its just a location string, so I'll change the variable name to 'location' to more accurately describe the item.
-
 ## CODING FIXES
 1. EndangeredAnimal class now inherits from Animal.
 2. Endangered animal sightings page does not properly show results in table form, making it difficult to read.  New to improve the page layout.
@@ -35,6 +32,14 @@ To create the necessary databases, launch postgres, then psql, and run the follo
 12. Age dropdown on new animal form now gets options from the age enum.
 13. endangered_sighting POST route was loading unnecessary data into the model. I removed the code for performance reasons.
 14. For performance reasons, after a sighting was submitted, I redirected the user to the home page.
+15. Re-organized index page to create distinct animal and endangered animal areas.
+16. Deleting an animal did not also delete the sightings of that animal, which would create orphaned sighting records.  Updated the delete method to fix this error.
+17.  Added a UI element in the details pages to access animal delete.
+18. was not properly setting endangered tag at instantiation.
+19. Created a single table inheritance between my animal and endangered animal classes, because sightings table could end up giving false information if we used two tables and two animal ids.
+
+## CODING TO DO
+6: Sighting names location LatLong, but its just a location string, so I'll change the variable name to 'location' to more accurately describe the item.
 
 
 
