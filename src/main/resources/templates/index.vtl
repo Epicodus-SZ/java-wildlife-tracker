@@ -3,29 +3,31 @@
 <h3><a href="/animal/new">Add Animal to System</a></h3>
 <hr>
 
-<h3> Report Non-Endangered Animal Sighting </h3>
+<!-- report Animal sighting form -->
+#if($animals.size() > 0)
+<h3> Report Animal Sighting </h3>
 <form action="/sighting" method="post">
-  #if($animals.size() >= 0)
     <label>Select Animal</label>
     <select name="animalSelected">
       #foreach($animal in $animals)
         <option value="$animal.getId()">$animal.getName()</option>
       #end
     </select>
-
     <label>Location</label>
     <input type="text" name="latLong">
     <label>Your Name</label>
     <input type="text" name="rangerName">
     <button type="submit">Submit Report</button>
-  #end
+
 </form>
-
 <hr>
+#end
 
+
+<!-- Report endangered animal form -->
+#if($endangeredAnimals.size() > 0)
 <h3> Report Endangered Animal Sighting </h3>
 <form action="/endangered_sighting" method="post">
-  #if($endangeredAnimals.size() >= 0)
     <label>Select Endangered Animal</label>
     <select name="endangeredAnimalSelected">
       #foreach($endangered_animal in $endangeredAnimals)
@@ -38,8 +40,9 @@
     <label>Your Name</label>
     <input type="text" name="rangerName">
     <button type="submit">Submit Report</button>
-  #end
 </form>
+<hr>
+#end
 
 
 <h3>Endangered Animal Sightings</h3>
