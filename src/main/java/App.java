@@ -1,6 +1,7 @@
 import java.util.Map;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Arrays;
 import java.util.ArrayList;
 import spark.ModelAndView;
 import spark.template.velocity.VelocityTemplateEngine;
@@ -27,11 +28,12 @@ public class App {
       String latLong = request.queryParams("latLong");
       Sighting sighting = new Sighting(animalIdSelected, latLong, rangerName);
       sighting.save();
-      model.put("sighting", sighting);
-      model.put("animals", EndangeredAnimal.all());
-      String animal = EndangeredAnimal.find(animalIdSelected).getName();
-      model.put("animal", animal);
-      model.put("template", "templates/success.vtl");
+      response.redirect("/");
+      // model.put("sighting", sighting);
+      // model.put("animals", EndangeredAnimal.all());
+      // String animal = EndangeredAnimal.find(animalIdSelected).getName();
+      // model.put("animal", animal);
+      // model.put("template", "templates/success.vtl");
       return new ModelAndView(model, layout);
     }, new VelocityTemplateEngine());
 
@@ -52,8 +54,8 @@ public class App {
 
     get("/animal/new", (request, response) -> {
       Map<String, Object> model = new HashMap<String, Object>();
-      model.put("animals", Animal.all());
-      model.put("endangeredAnimals", EndangeredAnimal.all());
+      model.put ("healthOptions", Arrays.asList(EndangeredAnimal.Health.values()));
+      model.put ("ageOptions", Arrays.asList(EndangeredAnimal.Age.values()));
       model.put("template", "templates/animal-form.vtl");
       return new ModelAndView(model, layout);
     }, new VelocityTemplateEngine());

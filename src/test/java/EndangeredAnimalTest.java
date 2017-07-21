@@ -11,19 +11,19 @@ public class EndangeredAnimalTest {
 
   @Test
   public void endangeredAnimal_instantiatesCorrectly_true() {
-    EndangeredAnimal testEndangeredAnimal = new EndangeredAnimal("Fox", "Healthy", "Young");
+    EndangeredAnimal testEndangeredAnimal = new EndangeredAnimal("Fox", "HEALTHY", "YOUTH");
     assertEquals(true, testEndangeredAnimal instanceof EndangeredAnimal);
   }
 
   @Test
   public void getHealth_returnsHealthAttribute_true() {
-    EndangeredAnimal testEndangeredAnimal = new EndangeredAnimal("Fox", "Healthy", "Young");
-    assertEquals("Healthy", testEndangeredAnimal.getHealth());
+    EndangeredAnimal testEndangeredAnimal = new EndangeredAnimal("Fox", "HEALTHY", "YOUTH");
+    assertEquals("HEALTHY", testEndangeredAnimal.getHealth());
   }
 
   @Test
   public void save_assignsIdAndSavesObjectToDatabase() {
-    EndangeredAnimal testEndangeredAnimal = new EndangeredAnimal("Fox", "Healthy", "Young");
+    EndangeredAnimal testEndangeredAnimal = new EndangeredAnimal("Fox", "HEALTHY", "YOUTH");
     testEndangeredAnimal.save();
     EndangeredAnimal savedEndangeredAnimal = EndangeredAnimal.allEndangered().get(0);
     assertEquals(testEndangeredAnimal.getId(), savedEndangeredAnimal.getId());
@@ -31,9 +31,9 @@ public class EndangeredAnimalTest {
 
   @Test
   public void all_returnsAllInstancesOfEndangeredAnimal_true() {
-    EndangeredAnimal firstEndangeredAnimal = new EndangeredAnimal("Fox", "Healthy", "Young");
+    EndangeredAnimal firstEndangeredAnimal = new EndangeredAnimal("Fox", "HEALTHY", "YOUTH");
     firstEndangeredAnimal.save();
-    EndangeredAnimal secondEndangeredAnimal = new EndangeredAnimal("Badger", "Okay", "Adult");
+    EndangeredAnimal secondEndangeredAnimal = new EndangeredAnimal("Badger", "Ill", "ADULT");
     secondEndangeredAnimal.save();
     assertEquals(true, EndangeredAnimal.allEndangered().get(0).equals(firstEndangeredAnimal));
     assertEquals(true, EndangeredAnimal.allEndangered().get(1).equals(secondEndangeredAnimal));
@@ -41,27 +41,27 @@ public class EndangeredAnimalTest {
 
   @Test
   public void find_returnsAnimalWithSameId_secondAnimal() {
-    EndangeredAnimal firstEndangeredAnimal = new EndangeredAnimal("Fox", "Healthy", "Young");
+    EndangeredAnimal firstEndangeredAnimal = new EndangeredAnimal("Fox", "HEALTHY", "YOUTH");
     firstEndangeredAnimal.save();
-    EndangeredAnimal secondEndangeredAnimal = new EndangeredAnimal("Badger", "Okay", "Adult");
+    EndangeredAnimal secondEndangeredAnimal = new EndangeredAnimal("Badger", "Ill", "ADULT");
     secondEndangeredAnimal.save();
     assertEquals(EndangeredAnimal.find(secondEndangeredAnimal.getId()), secondEndangeredAnimal);
   }
 
   @Test
   public void update_updatesHealthAttribute_true() {
-    EndangeredAnimal testEndangeredAnimal = new EndangeredAnimal("Fox", "Healthy", "Young");
+    EndangeredAnimal testEndangeredAnimal = new EndangeredAnimal("Fox", "HEALTHY", "YOUTH");
     testEndangeredAnimal.save();
-    testEndangeredAnimal.updateHealth("ill");
-    assertEquals("ill", EndangeredAnimal.find(testEndangeredAnimal.getId()).getHealth());
+    testEndangeredAnimal.updateHealth("ILL");
+    assertEquals("ILL", EndangeredAnimal.find(testEndangeredAnimal.getId()).getHealth());
   }
 
   @Test
   public void update_updatesAgeAttribute_true() {
-    EndangeredAnimal testEndangeredAnimal = new EndangeredAnimal("Fox", "Healthy", "Young");
+    EndangeredAnimal testEndangeredAnimal = new EndangeredAnimal("Fox", "HEALTHY", "YOUTH");
     testEndangeredAnimal.save();
-    testEndangeredAnimal.updateAge("Adult");
-    assertEquals("Adult", EndangeredAnimal.find(testEndangeredAnimal.getId()).getAge());
+    testEndangeredAnimal.updateAge("ADULT");
+    assertEquals("ADULT", EndangeredAnimal.find(testEndangeredAnimal.getId()).getAge());
   }
 
 }

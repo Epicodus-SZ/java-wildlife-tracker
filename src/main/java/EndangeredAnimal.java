@@ -1,24 +1,65 @@
 import org.sql2o.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.io.*;
+import org.apache.commons.lang3.EnumUtils;
+
+
 
 public class EndangeredAnimal extends Animal {
+  public enum Health {
+    HEALTHY("Healthy"), ILL("Ill");
+
+    private final String camelCase;
+
+    private Health(String desc) {
+      camelCase = desc;
+    }
+
+    public String camelCase() {
+      return camelCase;
+    }
+  }
+
+  public enum Age {
+    NEWBORN("Newborn"), YOUTH("Youth"), ADULT("Adult");
+
+    private final String camelCase;
+
+    private Age(String desc) {
+      camelCase = desc;
+    }
+
+    public String camelCase() {
+      return camelCase;
+    }
+  }
+
   public boolean endangered;
-  private String health;
-  private String age;
+  private Health health;
+  private Age age;
+
 
   public EndangeredAnimal(String name, String health, String age) {
     super(name);
-    this.health = health;
-    this.age = age;
+    this.health = EndangeredAnimal.Health.valueOf(health.toUpperCase());
+    this.age = EndangeredAnimal.Age.valueOf(age.toUpperCase());;
   }
 
   public String getHealth() {
-    return health;
+    return health.toString();
+  }
+
+  public String getHealthCamelCase() {
+    return health.camelCase();
   }
 
   public String getAge() {
-    return age;
+    return age.toString();
+  }
+
+  public String getAgeCamelCase() {
+    return age.camelCase();
   }
 
   @Override
@@ -27,7 +68,9 @@ public class EndangeredAnimal extends Animal {
       return false;
     } else {
       EndangeredAnimal newEndangeredAnimal = (EndangeredAnimal) otherEndangeredAnimal;
-      return this.getName().equals(newEndangeredAnimal.getName()) && this.getHealth().equals(newEndangeredAnimal.getHealth()) && this.getAge().equals(newEndangeredAnimal.getAge());
+      return  this.getName().equals(newEndangeredAnimal.getName()) &&
+              this.getHealth().equals(newEndangeredAnimal.getHealth()) &&
+              this.getAge().equals(newEndangeredAnimal.getAge());
     }
   }
 
@@ -37,7 +80,7 @@ public class EndangeredAnimal extends Animal {
       String sql = "INSERT INTO endangered_animals (name, health, age) VALUES (:name, :health, :age);";
       this.id = (int) con.createQuery(sql, true)
         .addParameter("name", this.name)
-        .addParameter("health", this.health)
+        .addParameter("health", this.health.toString())
         .addParameter("age", this.age)
         .executeUpdate()
         .getKey();
@@ -63,16 +106,22 @@ public class EndangeredAnimal extends Animal {
   }
 
   public void updateHealth(String health) {
+    if(!EnumUtils.isValidEnum(Health.class, health)) {
+      throw new IllegalArgumentException("That is not a valid health");
+    }
     try(Connection con = DB.sql2o.open()) {
       String sql = "UPDATE endangered_animals SET health=:health WHERE id=:id;";
       con.createQuery(sql)
         .addParameter("id", id)
-        .addParameter("health", health)
+        .addParameter("health", health.toUpperCase())
         .executeUpdate();
     }
   }
 
   public void updateAge(String age) {
+    if(!EnumUtils.isValidEnum(Age.class, age)) {
+      throw new IllegalArgumentException("That is not a valid Age");
+    }
     try(Connection con = DB.sql2o.open()) {
       String sql = "UPDATE endangered_animals SET age=:age WHERE id=:id;";
       con.createQuery(sql)

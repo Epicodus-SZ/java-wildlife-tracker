@@ -12,18 +12,18 @@
 
   <label>Health</label>
   <select name="health">
-    <option>Ill</option>
-    <option>Okay</option>
-    <option>Healthy</option>
+  #foreach($healthOption in $healthOptions)
+  <option>$healthOption.camelCase()</option>
+  #end
   </select>
 
   <label>Age</label>
   <select name="age">
-    <option>Newborn</option>
-    <option>Young</option>
-    <option>Adult</option>
+  #foreach($ageOption in $ageOptions)
+  <option>$ageOption.camelCase()</option>
+  #end
   </select>
 
   <button type="submit">Add Animal</button>
-  
+
 </form>
